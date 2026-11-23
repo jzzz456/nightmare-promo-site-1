@@ -1,0 +1,118 @@
+.hanging-eyes {
+  position: absolute;
+  inset: -5px 0 0;
+  z-index: 1;
+  pointer-events: none;
+  transform: translate3d(calc(var(--look-x, 0px) * -1.62), calc(var(--look-y, 0px) * -.38), 0);
+}
+.hanging-eye {
+  position: absolute;
+  top: 0;
+  width: clamp(44px, calc(9vw * var(--eye-depth)), var(--eye-size));
+  overflow: visible;
+  filter: brightness(calc(.65 + var(--eye-depth) * .26)) drop-shadow(4px 9px 12px #17091d9c);
+  transform-origin: 50% 0;
+  animation: eye-pendulum ease-in-out infinite alternate;
+}
+@keyframes eye-pendulum {
+  from { transform: translateX(-50%) rotate(var(--swing-from)); }
+  to { transform: translateX(-50%) rotate(var(--swing-to)); }
+}
+.eye-chain {
+  position: absolute;
+  width: 9px;
+  height: 100%;
+  left: calc(50% - 4.5px);
+  background: radial-gradient(ellipse at 50% 50%, transparent 2px, #a17f76 2.4px 3.2px, #30232d 3.6px, transparent 4.2px) center top / 9px 13px repeat-y;
+}
+.eye-charm { position: absolute; bottom: 0; left: 0; width: 100%; transform: translateY(48%); }
+
+.memory-hall { filter: brightness(.82) saturate(.8); }
+.memory-wallpaper { filter: brightness(.61) saturate(.72); }
+.lamp-shade, .lamp-glow, .frame-light { transition: opacity 125ms ease; }
+.room-light[data-lit='true'] .lamp-shade, .room-light[data-lit='false'] .lamp-glow { opacity: 0; }
+.room-light[data-lit='false'] .lamp-shade, .room-light[data-lit='true'] .lamp-glow { opacity: 1; }
+.frame-light[data-lit='false'] { opacity: .04; }
+.frame-light[data-lit='true'] { opacity: .73; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hanging-eye { animation: none; transform: translateX(-50%); }
+  .lamp-shade, .lamp-glow, .frame-light { transition: none; }
+}
+
+.sand-reveal, .flowing-sand { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.sand-reveal { z-index: 1; }
+.sand-revealed { visibility: hidden; }
+.sand-touch-zone {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: min(66vw, 60svh);
+  height: min(63vw, 58svh);
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: 0;
+  color: #ffe5b0;
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: none;
+}
+.sand-touch-zone span { position: absolute; top: 96%; left: 50%; transform: translateX(-50%); font-size: 13px; letter-spacing: .16em; text-shadow: 0 2px 12px #160c09; white-space: nowrap; }
+.sand-touch-zone:focus-visible { outline: 1px solid #e8c18c; outline-offset: 9px; border-radius: 50%; }
+.adult-flowing .boss-projection, .adult-gathering .boss-projection, .adult-flowing .boss-shadow, .adult-gathering .boss-shadow { opacity: 0; }
+.dream-3 .boss-projection { transition: opacity 1.45s ease-in; }
+.adult-revealing .boss-projection, .adult-revealed .boss-projection { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .dream-3 .boss-projection { transition: none; } }
+
+.quilt-bed {
+  position: absolute;
+  z-index: 3;
+  right: 8.5%;
+  bottom: max(10px, 2%);
+  width: min(16.5vw, 19.8svh, 214.5px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform-origin: 75% 83%;
+  transform: translate(calc(var(--look-x, 0px) * -.65 + var(--approach, .06) * 5vw), calc(var(--look-y, 0px) * -.45));
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+}
+.quilt-bed img:not([hidden]), .quilt-bed canvas:not([hidden]) { display: block; width: 100%; height: auto; }
+.quilt-bed::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 3%;
+  right: 2%;
+  bottom: 14%;
+  height: 19%;
+  transform: rotate(-12deg);
+  background: radial-gradient(ellipse, #0d0518a8, transparent 71%);
+  pointer-events: none;
+}
+.quilt-bed canvas, .quilt-bed img {
+  filter: brightness(.87) saturate(.86);
+}
+@media (hover: hover) {
+  .quilt-bed:hover .quilt-prompt { border-color: #e8a1c6; color: #241226; }
+}
+.quilt-prompt {
+  display: block;
+  width: max-content;
+  margin: 2px auto 0;
+  padding: 7px 9px;
+  border: 1px solid #f591c6;
+  background: var(--accent);
+  border-radius: 2px;
+  font-weight: 750;
+  text-shadow: none;
+  color: #241226;
+  font-size: clamp(12px, 1.3vw, 15px);
+  line-height: 1.5;
+  letter-spacing: .08em;
+}
+@media (max-width: 640px) and (orientation: portrait) {
+  .dream-1 .dream-hud { width: 46vw; }
+  .quilt-bed { width: 25.3vw; right: 6%; bottom: max(12px, 2%); }
+}
