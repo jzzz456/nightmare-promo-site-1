@@ -56,5 +56,5 @@ export const CHAPTERS = [
 ];
 
 export function art(chapter, kind) {
-  return import.meta.env.BASE_URL + 'assets/' + chapter.id + '/' + (chapter.artFiles?.[kind] ?? kind) + '.png';
+  return import.meta.env.BASE_URL + 'assets/' + chapter.id + '/' + (chapter.artFiles?.[kind] ?? kind) + '.webp';
 }

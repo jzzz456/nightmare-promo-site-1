@@ -51,15 +51,17 @@ const SegmentVisibilityWrapper = ({ children, segmentIndex }) => {
 const InfiniteCorridorManager = ({
     onDoorEnter,
     hideDoorsForSegments = [], // Segments that should hide their SegmentDoors
+    entranceOnly,
     clipSegmentNeg1 = false, // Whether to clip segment -1 at EntranceDoors
     openingDoorId,
     activeDoorId
 }) => {
     const { camera } = useThree();
-    // Pre-mount segments 0 and 1 so shaders compile during preloader.
-    // Segment -1 is NOT pre-mounted to avoid visual collision with entrance doors.
-    // It mounts dynamically when camera reaches entrance (behind camera = invisible stutter).
-    const [activeSegments, setActiveSegments] = useState([-1, 0, 1]);
+    const [activeSegments, setActiveSegments] = useState(() => {
+        if (entranceOnly) return [-1];
+        const current = Math.floor((10 - camera.position.z) / SEGMENT_LENGTH);
+        return [current - 1, current, current + 1].filter(index => index >= -1);
+    });
 
     // Calculate which segment the camera is in
     const getSegmentFromZ = useCallback((z) => {
@@ -68,6 +70,7 @@ const InfiniteCorridorManager = ({
 
     // Update active segments based on camera position
     useFrame(() => {
+        if (entranceOnly) return;
         const currentSegment = getSegmentFromZ(camera.position.z);
 
         // Render previous, current, and next segment

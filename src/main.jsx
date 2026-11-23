@@ -83,7 +83,7 @@ function Hall({ phase, travel, nearby, selected, reduced, onNear, onDoor, intro 
     <fog attach="fog" args={['#1b1025', 6, 32]} />
     <ambientLight intensity={.95} color="#d7b5dc" />
     <hemisphereLight intensity={.85} color="#dfaec4" groundColor="#302236" />
-    <InfiniteCorridorManager clipSegmentNeg1 onDoorEnter={onDoor} activeDoorId={nearby?.key} openingDoorId={opening} />
+    <InfiniteCorridorManager entranceOnly={phase === 'entry'} clipSegmentNeg1 onDoorEnter={onDoor} activeDoorId={nearby?.key} openingDoorId={opening} />
     {starting && <CryptEntrance active={phase === 'entry'} opening={opening} onEnter={onDoor} />}
     <MovingLight />
     <HallCamera phase={phase} travel={travel} openingDoor={selected} reduced={reduced} onNear={onNear} intro={intro} />
